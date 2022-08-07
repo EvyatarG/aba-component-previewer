@@ -1,16 +1,16 @@
 <template>
-  <home-demo/>
+  <dash-board />
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
-  import HomeDemo from '../components/HomeDemo.vue'
+  import DashBoard from '../components/DashBoard.vue'
 
   export default Vue.extend({
-    name: 'home_view',
+    name: 'dashBoard_view',
 
     components: {
-      HomeDemo,
+      DashBoard,
     },
   })
 </script>

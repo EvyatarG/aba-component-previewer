@@ -1,16 +1,16 @@
 <template>
-  <home-demo/>
+  <nav-bar-pane />
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
-  import HomeDemo from '../components/HomeDemo.vue'
+  import NavBarPane from '../components/NavBarPane.vue'
 
   export default Vue.extend({
-    name: 'home_view',
+    name: 'NavBarPane_view',
 
     components: {
-      HomeDemo,
+      NavBarPane,
     },
   })
 </script>
