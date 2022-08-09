@@ -1,9 +1,9 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" style="background-color: #CFD8DC;" >
 
     <v-main 
       class="mx-0"
-      :style="`max-height: ${nav_bar_max_height}px;`"
+      :style="`width: 100%; max-height: ${nav_bar_max_height}px; position: fixed;  z-index: 999`"
     > 
         <nav-bar-pane
           :required_frame_height='nav_bar_max_height'
@@ -58,8 +58,8 @@
 
 <!-- margin and paddings spacing class format: {property}{direction}-{size} -- https://vuetifyjs.com/en/styles/spacing/#how-it-works -->
     <v-main 
-      class="ml-3 pt-3"
-      style="background-color: #CFD8DC;"
+      class="mx-4 mb-4"
+      :style="`padding-top: ${ nav_bar_max_height +4 }px;`" 
     > 
       <div style="background-color: white;">
         <router-view />
