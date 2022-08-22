@@ -12,7 +12,7 @@ enum pcrLabels {
   SDR = 'SDR',
   Created = 'Created',
   Action_options = 'Actions'
-} 
+}
 enum campaignTypes {
   warmup = 'Warmup',
   similar_leads = 'Similar Leads',
@@ -29,14 +29,14 @@ enum col_struct {
 }
 
 interface pcr {
-    name: string;
-    type: campaignTypes;
-    status: campaignStatuses;
-    channel: string;
-    audience_status: number;
-    sdr: string;
-    created_date: string;
-    isLaunched: boolean;
+  name: string;
+  type: campaignTypes;
+  status: campaignStatuses;
+  channel: string;
+  audience_status: number;
+  sdr: string;
+  created_date: string;
+  isLaunched: boolean;
 }
 let campaignNameNumerator = 0
 function initData(options?: Partial<pcr>): pcr {
@@ -51,7 +51,7 @@ function initData(options?: Partial<pcr>): pcr {
     created_date: '1.1.11',
     isLaunched: false,
   };
-  if (!options?.name) { campaignNameNumerator+=1 }
+  if (!options?.name) { campaignNameNumerator += 1 }
 
   return {
     ...defaults,
@@ -60,7 +60,7 @@ function initData(options?: Partial<pcr>): pcr {
 }
 
 const muckData: pcr[] = [
-  initData ({
+  initData({
     name: 'Frozen Yogurt',
     type: campaignTypes.similar_leads,
     // channel: 'linkedin',
@@ -68,56 +68,56 @@ const muckData: pcr[] = [
     sdr: '1%',
     // created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'Eclair',
     type: campaignTypes.warmup,
     audience_status: 6.0,
     sdr: '7%',
     created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'Cupcake',
     type: campaignTypes.warmup,
     audience_status: 4.3,
     sdr: '8%',
     created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'Gingerbread',
     type: campaignTypes.warmup,
     audience_status: 3.9,
     sdr: '16%',
     created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'Jelly bean',
     type: campaignTypes.warmup,
     audience_status: 0.0,
     sdr: '0%',
     created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'Lollipop',
     type: campaignTypes.warmup,
     audience_status: 0,
     sdr: '2%',
     created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'Honeycomb',
     type: campaignTypes.warmup,
     audience_status: 6.5,
     sdr: '45%',
     created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'Donut',
     type: campaignTypes.similar_leads,
     audience_status: 4.9,
     sdr: '22%',
     created_date: '20.7.22',
   }),
-  initData ({
+  initData({
     name: 'KitKat',
     type: campaignTypes.warmup,
     audience_status: 7,
@@ -129,34 +129,41 @@ const muckData: pcr[] = [
 export default Vue.extend({
   name: 'DashBoard',
 
-  created () {
+  created() {
+    try {
+      this.sdr_route_data = this.$route.params.id
+      if (this.sdr_route_data === undefined) { this.sdr_route_data = 'sdr_route_data is undefined' }
+    } catch {
+      this.sdr_route_data = 'default due to error'
+    }
+
     this.initialize()
   },
 
   computed: {
-    getFormTitle () {
+    getFormTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
 
   watch: {
-    dialog (value) {
+    dialog(value) {
       value || this.close()
     },
-    dialogDelete (value) {
+    dialogDelete(value) {
       value || this.closeDelete()
     },
-    dialogLaunchCampaign (value) {
+    dialogLaunchCampaign(value) {
       value || this.closeLaunchCampaign()
     },
   },
 
   methods: {
-    initialize () {
+    initialize() {
       this.campaignData = muckData
     },
 
-    getColor (value: campaignTypes) {
+    getColor(value: campaignTypes) {
       switch (value) {
         case campaignTypes.warmup:
           return 'green'
@@ -169,17 +176,17 @@ export default Vue.extend({
       }
     },
 
-    editItem (item: pcr) {
+    editItem(item: pcr) {
       this.editedIndex = this.campaignData.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogEdit = true
     },
-    launchCampaign (item: pcr) {
+    launchCampaign(item: pcr) {
       this.editedIndex = this.campaignData.indexOf(item)
       this.editedItem = this.campaignData[this.editedIndex]
       this.dialogLaunchCampaign = true
     },
-    launchCampaignConfirm () {
+    launchCampaignConfirm() {
       // this.campaignData.splice(this.editedIndex, 1)
       if (this.editedIndex > -1) {
         const isl = this.editedItem.isLaunched
@@ -188,34 +195,34 @@ export default Vue.extend({
       }
       this.closeLaunchCampaign()
     },
-    deleteItem (item: pcr) {
+    deleteItem(item: pcr) {
       this.editedIndex = this.campaignData.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.campaignData.splice(this.editedIndex, 1)
       this.closeDelete()
     },
-    close () {
+    close() {
       this.dialogEdit = false
       this.resetEditState()
     },
-    closeDelete () {
+    closeDelete() {
       this.resetEditState()
       this.dialogDelete = false
     },
-    closeLaunchCampaign () {
+    closeLaunchCampaign() {
       this.dialogLaunchCampaign = false
       this.resetEditState()
     },
-    resetEditState () {
+    resetEditState() {
       this.$nextTick(() => {
         this.editedIndex = -1
         this.editedItem = Object.assign({}, this.defaultItem)
       })
     },
-    save () {
+    save() {
       if (this.editedIndex > -1) {
         Object.assign(this.campaignData[this.editedIndex], this.editedItem)
       } else {
@@ -228,6 +235,8 @@ export default Vue.extend({
   data: () => ({
     // Pass local Enums:
     pcrLabels, col_struct, campaignTypes, campaignStatuses,
+
+    sdr_route_data: '',
 
     searchValue: '',
 
@@ -246,8 +255,8 @@ export default Vue.extend({
     campaignData: [] as pcr[],
     editedIndex: -1,
 
-    editedItem: initData () as pcr,
-    defaultItem: initData () as pcr,
+    editedItem: initData() as pcr,
+    defaultItem: initData() as pcr,
   }),
-  
+
 })

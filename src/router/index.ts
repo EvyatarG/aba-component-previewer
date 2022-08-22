@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import HomeView from '../views/HomeView.vue' 
-import DashboardView from '../views/DashboardView.vue' 
-import VSlotView from '../views/VSlotView.vue' 
-import NavBarPaneView from '../views/NavBarPaneView.vue' 
+import HomeView from '../views/HomeView.vue'
+import DashboardView from '../views/DashboardView.vue'
+import VSlotView from '../views/VSlotView.vue'
+import NavBarPaneView from '../views/NavBarPaneView.vue'
 
 Vue.use(VueRouter)
 
